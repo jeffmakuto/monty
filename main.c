@@ -64,12 +64,12 @@ void process_file(FILE *file)
 		len = strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0'; /* Remove the newline character */
-                interpreter.line = line;
-                count++;
-                execute(line, &stack, line_number);
-        }
-        free(line);
-        free_resources();
+		interpreter.line = line;
+		count++;
+		execute(line, &stack, line_number);
+	}
+	free(line);
+	free_resources();
 }
 
 /**

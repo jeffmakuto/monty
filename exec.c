@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * exec - execute a line of Monty bytecode
+ * execute - execute a line of Monty bytecode
  * @line: the line to execute
  * @stack: pointer to the stack
  * @line_number: the line number being executed
