@@ -64,7 +64,7 @@ void free_stack(stack_t *stack);
 int execute(char *content, stack_t **head, unsigned int count, FILE *file);
 int is_numeric(const char *str);
 void push_stack(stack_t **stack, int value);
-void free_resources();
+void free_resources(void);
 
 /* Prototype functions */
 void push(stack_t **stack, unsigned int line_number);
