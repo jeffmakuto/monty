@@ -70,6 +70,7 @@ void process_file(FILE *file)
 	}
 	free(line);
 	free_resources();
+	fclose(file);
 }
 
 /**
