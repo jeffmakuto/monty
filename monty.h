@@ -61,6 +61,10 @@ typedef struct info_s
 extern info_t interpreter;
 
 /* Auxilliary functions */
+void process_file(FILE *file);
+int execute(char *line, stack_t **stack, unsigned int count, FILE *file);
+void free_stack(stack_t *stack);
+void free_resources_and_exit(void);
 char *_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t getstdin(char **lineptr, int file);
 char  *clean_line(char *line);
@@ -69,8 +73,6 @@ char  *clean_line(char *line);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
-int execute(char *line, stack_t **stack, unsigned int count, FILE *file);
-void free_stack(stack_t *stack);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
