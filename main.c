@@ -70,8 +70,8 @@ int execute(char *line, stack_t **stack, unsigned int count, FILE *file)
 	instruction_t opcode_str[] = {
 				{"push", push}, {"pall", pall}, {"pint", pint},
 				{"pop", pop}, {"swap", swap}, {"add", add},
-				{"nop", nop}, {"sub", sub},	{"div", div},
-				{"mul", mul},	{"mod", mod},	{"pchar", pchar},
+				{"nop", nop}, {"sub", sub}, {"div", _div},
+				{"mul", mul}, {"mod", mod}, {"pchar", pchar},
 				{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
 				{"queue", queue}, {"stack", stack}, {NULL, NULL}
 				};
@@ -90,8 +90,8 @@ int execute(char *line, stack_t **stack, unsigned int count, FILE *file)
 		}
 		i++;
 	}
-	fprintf(stderr, "L%d: unknown instruction %s\n", counter, op);
-	free_resources_and_exit();
+	fprintf(stderr, "L%d: unknown instruction %s\n", count, op);
+	free_resources_and_exit(file, line, stack);
 	return (1);
 }
 
@@ -113,11 +113,14 @@ void free_stack(stack_t *stack)
 
 /**
  * free_resources_and_exit - frees resources and exits with failure status
+ * @file: monty file to read from
+ * @line: line to read from
+ * @stack: pointer to head of stack
  */
-void free_resources_and_exit(void)
+void free_resources_and_exit(FILE *file, char *line, stack_t **stack)
 {
-	fclose(interpreter.file);
-	free(interpreter.line);
-	free_stack(interpreter.stack);
+	fclose(file);
+	free(line);
+	free_stack(*stack);
 	exit(EXIT_FAILURE);
 }
