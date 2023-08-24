@@ -1,18 +1,7 @@
 #include "monty.h"
 
 /* Initialize an 'info_t' structure for program execution */
-info_t interpreter = {
-	NULL,
-	NULL,
-	NULL,
-	0,
-	{
-		{"push", push},
-		{"pall", pall},
-		{"pop", pop},
-		{NULL, NULL}
-	}
-};
+info_t interpreter = {NULL, NULL, NULL, 0};
 
 /**
  * main - starting point
@@ -47,30 +36,27 @@ int main(int ac, char *av[])
  */
 void process_file(FILE *file)
 {
+	size_t buffer = 0;
+	ssize_t bytes_read;
 	char *line = NULL;
-	size_t size = BUFFER, len;
 	stack_t *stack = NULL;
-	unsigned int line_number = 0, count = 0;
+	unsigned int count = 0;
 
-	line = malloc(size);
-	if (!line)
+	while (1)
 	{
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
-	}
-
-	while (fgets(line, size, file))
-	{
-		len = strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0'; /* Remove the newline character */
+		bytes_read = getline(&line, &buffer, file);
+		if (bytes_read == -1)
+			break;
+		interpreter.file = file;
 		interpreter.line = line;
 		count++;
-		execute(line, &stack, line_number);
+		if (bytes_read > 0)
+			execute(line, &stack, count, file);
 	}
 	free(line);
-	free_resources();
+	free_stack(stack);
 	fclose(file);
+    
 }
 
 /**

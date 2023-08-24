@@ -41,32 +41,29 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct info_s - a structure to hold information for program execution
- * @file: file pointer to the input source file
- * @line: current line being processed in the input file
- * @stack: pointer to the stack structure for data storage
- * @line_number: current line number being processed in the input file
- * @instructions: flexible array member for storing program instructions
+ * struct info_s - a struct to represent a shared entity
+ * @operand: argument for the entity
+ * @line: current line
+ * @count: an integer representing line number
+ * @file: monty file
  */
 typedef struct info_s
 {
-	FILE *file;
+	char *operand;
 	char *line;
-	stack_t *stack;
-	unsigned int line_number;
-	instruction_t instructions[50];
+	int count;
+	FILE *file;
 } info_t;
 
 /* Global variable */
 extern info_t interpreter;
 
-/* Prototype functions */
-void execute(char *line, stack_t **stack, unsigned int line_number);
-instruction_t *find_instruction(char *opcode);
-void free_resources(void);
-void free_stack(stack_t *stack);
+/* Auxilliary functions */
 void process_file(FILE *file);
+void free_stack(stack_t *stack);
+int execute(char *content, stack_t **head, unsigned int count, FILE *file);
 
+/* Prototype functions */
 void push(stack_t **stack, unsigned int line_number);
 int is_numeric(const char *str);
 void push_stack(stack_t **stack, int value);

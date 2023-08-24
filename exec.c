@@ -1,54 +1,46 @@
 #include "monty.h"
 
 /**
- * execute - execute a line of Monty bytecode
- * @line: the line to execute
- * @stack: pointer to the stack
- * @line_number: the line number being executed
+ * execute - execute Monty bytecode instructions.
+ * @line: the instruction line
+ * @stack: a pointer to the stack
+ * @count: the line number of the instruction
+ * @file: the Monty bytecode file
+ * Return: 0 on success, 1 on failure
  */
-void execute(char *line, stack_t **stack, unsigned int line_number)
+int execute(char *line, stack_t **stack, unsigned int count, FILE *file)
 {
-	char *opcode = strtok(line, " \t\n");
-	instruction_t *instruction;
+	instruction_t opcode_str[] = {
+		{"push", push}, {"pall", pall}, {"pint", pint},
+		{"pop", pop}, {"swap", swap}, {"add", add},
+		{"nop", nop}, {"sub", sub}, {"div", div},
+		{"mul", mul}, {"mod", mod}, {"pchar", pchar},
+		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+		{"queue", queue}, {"stack", stack},
+		{NULL, NULL}
+	};
+	unsigned int i = 0;
+	char *op;
 
-	if (!opcode || opcode[0] == '#') /* Ignore empty lines and comments */
-		return;
-	instruction = find_instruction(opcode);
-	if (!instruction)
+	op = strtok(line, " \n\t");
+	if (op && op[0] == '#')
+		return (0);
+	interpreter.operand = strtok(NULL, " \n\t");
+	while (opcode_str[i].opcode && op)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-		free_resources();
-		exit(EXIT_FAILURE);
-	}
-	if (instruction->opcode)
-		instruction->f(stack, line_number);
-	interpreter.line = NULL; /* Reset the line pointer after execution */
-}
-
-/**
- * find_instruction - find the instruction function based on opcode
- * @opcode: the opcode to search for
- * Return: pointer to the corresponding instruction function,
- * or NULL if not found
- */
-instruction_t *find_instruction(char *opcode)
-{
-	int i = 0;
-
-	while (interpreter.instructions[i].opcode)
-	{
-		if (strcmp(opcode, interpreter.instructions[i].opcode) == 0)
-			return (&interpreter.instructions[i]);
+		if (strcmp(op, opcode_str[i].opcode) == 0)
+		{	opcode_str[i].f(stack, count);
+			return (0);
+		}
 		i++;
 	}
-	return (NULL);
-}
-
-/**
- * free_resources - free allocated resources
- */
-void free_resources(void)
-{
-	free_stack(interpreter.stack);
-	fclose(interpreter.file);
+	if (op && opcode_str[i].opcode == NULL)
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", count, op);
+		fclose(file);
+		free(line);
+		free_stack(*stack);
+		exit(EXIT_FAILURE);
+	}
+	return (1);
 }
