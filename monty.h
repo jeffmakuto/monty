@@ -62,11 +62,12 @@ extern info_t interpreter;
 void process_file(FILE *file);
 void free_stack(stack_t *stack);
 int execute(char *content, stack_t **head, unsigned int count, FILE *file);
+int is_numeric(const char *str);
+void push_stack(stack_t **stack, int value);
+void free_resources();
 
 /* Prototype functions */
 void push(stack_t **stack, unsigned int line_number);
-int is_numeric(const char *str);
-void push_stack(stack_t **stack, int value);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 

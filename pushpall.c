@@ -7,16 +7,16 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	char *arg = strtok(NULL, " \t\n");
+	char *operand = strtok(NULL, " \t\n");
 	int value;
 
-	if (!arg || !is_numeric(arg))
+	if (!operand || !is_numeric(arg))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		free_resources();
 		exit(EXIT_FAILURE);
 	}
-	value = atoi(arg);
+	value = atoi(operand);
 	push_stack(stack, value);
 }
 
@@ -75,3 +75,18 @@ void pall(stack_t **stack, unsigned int line_number)
 		current = current->next;
 	}
 }
+
+/**
+ * free_resources - frees allocated resources
+ * and exits the program
+ */
+void free_resources(void)
+{
+	if (interpreter.file)
+		fclose(interpreter.file);
+	if (interpreter.line)
+		free(interpreter.line);
+	if (interpreter.operand)
+		free(interpreter.operand);
+}
+
