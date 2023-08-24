@@ -20,7 +20,10 @@ void mul(stack_t **stack, unsigned int line_number)
 	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
-		free_resources_and_exit();
+		fclose(interpreter.file);
+		free(interpreter.line);
+		free_stack(*stack);
+		exit(EXIT_FAILURE);
 	}
 	h = *stack;
 	aux = h->next->n * h->n;

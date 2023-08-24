@@ -21,7 +21,10 @@ void sub(stack_t **stack, unsigned int line_number)
 	if (node_count < 2)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
-		free_resources_and_exit();
+		fclose(interpreter.file);
+		free(interpreter.line);
+		free_stack(*stack);
+		exit(EXIT_FAILURE);
 	}
 
 	aux = *stack;

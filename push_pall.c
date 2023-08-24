@@ -13,7 +13,10 @@ void push(stack_t **stack, unsigned int line_number)
 	if (!interpreter.operand)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free_resources_and_exit();
+		fclose(interpreter.file);
+		free(interpreter.line);
+		free_stack(*stack);
+		exit(EXIT_FAILURE);;
 	}
 
 	if (interpreter.operand[0] == '-')
@@ -31,7 +34,10 @@ void push(stack_t **stack, unsigned int line_number)
 	if (flag == 1)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free_resources_and_exit();
+		fclose(interpreter.file);
+		free(interpreter.line);
+		free_stack(*stack);
+		exit(EXIT_FAILURE);
 	}
 
 	n = atoi(interpreter.operand);

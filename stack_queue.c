@@ -1,12 +1,12 @@
 #include "monty.h"
 
 /**
- * stack - prints the top node
+ * _stack - prints the top node
  * @stack: stack stack
  * @line_number: line_number
  * Return: void
 */
-void stack(stack_t **stack, unsigned int line_number)
+void _stack(stack_t **stack, unsigned int line_number)
 {
 	(void)stack;
 	(void)line_number;
@@ -15,12 +15,12 @@ void stack(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * queue - prints the top
+ * _queue - prints the top
  * @stack: haed node
  * @line_number: line_number
  * Return: void
  */
-void queue(stack_t **stack, unsigned int line_number)
+void _queue(stack_t **stack, unsigned int line_number)
 {
 	(void)stack;
 	(void)line_number;

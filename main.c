@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /* Global data structure to hold shared information across functions */
-info_t interpreter = {NULL, NULL, NULL, 0};
+info_t interpreter = {NULL, NULL, 0, NULL};
 
 /**
 * main - starting point
@@ -73,7 +73,7 @@ int execute(char *line, stack_t **stack, unsigned int count, FILE *file)
 				{"nop", nop}, {"sub", sub}, {"div", _div},
 				{"mul", mul}, {"mod", mod}, {"pchar", pchar},
 				{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
-				{"queue", queue}, {"stack", stack}, {NULL, NULL}
+				{"queue", _queue}, {"stack", _stack}, {NULL, NULL}
 				};
 	unsigned int i = 0;
 	char *op;
@@ -91,7 +91,7 @@ int execute(char *line, stack_t **stack, unsigned int count, FILE *file)
 		i++;
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n", count, op);
-	free_resources_and_exit(file, line, stack);
+	free_and_exit(file, line, stack);
 	return (1);
 }
 
@@ -112,12 +112,12 @@ void free_stack(stack_t *stack)
 }
 
 /**
- * free_resources_and_exit - frees resources and exits with failure status
+ * free_and_exit - frees resources and exits with failure status
  * @file: monty file to read from
  * @line: line to read from
  * @stack: pointer to head of stack
  */
-void free_resources_and_exit(FILE *file, char *line, stack_t **stack)
+void free_and_exit(FILE *file, char *line, stack_t **stack)
 {
 	fclose(file);
 	free(line);

@@ -64,7 +64,7 @@ extern info_t interpreter;
 void process_file(FILE *file);
 int execute(char *line, stack_t **stack, unsigned int count, FILE *file);
 void free_stack(stack_t *stack);
-void free_resources_and_exit(file, line, stack);
+void free_and_exit(FILE *file, char *line, stack_t **stack);
 char *_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t getstdin(char **lineptr, int file);
 char  *clean_line(char *line);
@@ -87,7 +87,7 @@ void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, __attribute__((unused)) unsigned int line_number);
 void add_node(stack_t **stack, int n);
 void add_queue(stack_t **stack, int n);
-void queue(stack_t **stack, unsigned int line_number);
-void stack(stack_t **stack, unsigned int line_number);
+void _queue(stack_t **stack, unsigned int line_number);
+void _stack(stack_t **stack, unsigned int line_number);
 
 #endif
