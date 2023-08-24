@@ -16,7 +16,7 @@ void push(stack_t **stack, unsigned int line_number)
 		fclose(interpreter.file);
 		free(interpreter.line);
 		free_stack(*stack);
-		exit(EXIT_FAILURE);;
+		exit(EXIT_FAILURE);
 	}
 
 	if (interpreter.operand[0] == '-')
